@@ -1,0 +1,26 @@
+.header_wrapper {
+    height: 68px;
+    padding: 16px 0;
+    background-color: #fff;
+    margin-bottom: 20px;
+    box-shadow: var(--wraper-shadow);
+}
+
+.limit_container {
+    padding: 0 10px;
+    max-width: var(--limit-witdh-container);
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.backButton {
+    margin-right: 10px;
+}

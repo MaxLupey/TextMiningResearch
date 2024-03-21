@@ -1,0 +1,13 @@
+.panel {
+    align-content: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.panel button {
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}

@@ -1,0 +1,7 @@
+/qodana.yaml
+/results/*
+/qodana.sarif.json
+.idea/*
+tests/test_data/*.html
+env/client_secrets.json
+env/.env

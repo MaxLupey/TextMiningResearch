@@ -1,0 +1,5 @@
+.outlet_container{
+    max-width: var(--limit-witdh-container);
+    margin: 0 auto;
+    padding: 0 10px;
+}

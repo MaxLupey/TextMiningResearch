@@ -1,0 +1,16 @@
+.download_button {
+    padding: 0 5px;
+    background-color: #1976d2;
+    border: 1px solid #3961d9;
+    transition: box-shadow .3s, border-color .3s, background-color .3s, color .3s;
+    border-radius: 4px;
+    color: white;
+}
+
+.download_button:hover {  
+    box-shadow: 0 0 3px black
+}
+
+.download_button:active {
+    background-color: #368ee7;
+}

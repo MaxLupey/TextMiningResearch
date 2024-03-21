@@ -1,0 +1,14 @@
+.main_section_wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.main_section_items {
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

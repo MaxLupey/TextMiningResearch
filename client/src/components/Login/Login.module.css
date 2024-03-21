@@ -1,0 +1,40 @@
+.login_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    width: 100%;
+    min-height: 100vh;  
+}
+
+.login_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    flex-direction: column;
+    width: 400px;
+    border-radius: 12px;
+    box-shadow: var(--wraper-shadow);
+    height: 500px;
+    border: 1px dashed #AAB1C6;
+    background: #FFFFFF;
+}
+
+.login_title_container {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.login_title {
+    color: var(--title-color);
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.sigin_container {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}

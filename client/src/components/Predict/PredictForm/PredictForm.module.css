@@ -1,0 +1,18 @@
+.predict_form {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 80%;
+    background-color: #fff;
+    border: var(--border-solid);
+    border-radius: var(--border-radius);
+    box-shadow: var(--wraper-shadow);
+    margin-bottom: 20px;
+}
+
+.input {
+    background-color: #fff;
+    width: 100%;
+}

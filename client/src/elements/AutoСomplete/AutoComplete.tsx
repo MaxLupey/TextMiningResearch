@@ -1,7 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { FC } from "react"
 import { Controller} from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import {tminginRequest} from "../../api/requests/tminingRequests";
 import {IProps, ModelOption} from "../../interfaces/auto.complete.interface"
 

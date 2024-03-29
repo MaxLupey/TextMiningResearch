@@ -1,5 +1,5 @@
-import {FC, useEffect, useState} from "react";
-import {FieldError, SubmitHandler, useForm} from "react-hook-form";
+import {FC, useState} from "react";
+import {SubmitHandler, useForm} from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { TextField} from "@mui/material";
 
@@ -13,7 +13,7 @@ import { IPredictData } from "../../../interfaces/predict.interface";
 import { AutoComplete } from "../../../elements/AutoСomplete/AutoComplete";
 
 interface IProps {
-    setPredictData: React.Dispatch<React.SetStateAction<IPredictData | null>>
+    setPredictData: React.Dispatch<React.SetStateAction<IPredictData | undefined>>
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
     isLoading: boolean
 }
@@ -25,7 +25,7 @@ const PredictForm: FC<IProps> = ({setPredictData, setIsLoading, isLoading}) => {
     const onSubmit: SubmitHandler<any> = async (data) => {
         setIsLoading(true)
         setError(null)
-        setPredictData(null)
+        setPredictData(undefined)
         let queries = {
             model : data.model, // pass the uuid instead of the name
             text : data.text,

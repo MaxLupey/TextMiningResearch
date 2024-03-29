@@ -2,8 +2,8 @@ import Joi from "joi";
 
 
 const trainValidator = Joi.object({
-    name: Joi.string().required().max(100).empty('').messages({
-        'string.pattern.base': 'name must have max 100 letters'
+    name: Joi.string().required().max(100).empty('').regex(/^\w+$/).messages({
+        'string.pattern.base': 'name must have max 100 letters and must contain only alphanumeric characters and underscores.',
     }),
     x: Joi.string().max(100).empty('').messages({
         'string.pattern.base': 'x must have max 100 letters'

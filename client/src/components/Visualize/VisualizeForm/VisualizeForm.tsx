@@ -1,6 +1,6 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import {SubmitHandler, useForm} from "react-hook-form";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import {Switch, TextField} from "@mui/material";
 import { AxiosError } from "axios";
 
@@ -21,22 +21,22 @@ interface IProps {
 
 const VisualizeForm: FC<IProps> = ({setVisualizeData, isLoading, setIsLoading, setOutputFormat}) => {
     const {register, control, handleSubmit, formState:{errors, isValid}} = useForm({mode: 'all', resolver: joiResolver(visualizeVaidator)});
-    const [outputFormat, _setOutputFormat] = useState<boolean>(false)
+    const [outputFormatBool, setOutputFormatBool] = useState<boolean>(false)
     const [error, setError] = useState<null | AxiosError>(null)
     const [isRedirect, setIsRedirect] = useState<boolean>(false)
     const onSubmit: SubmitHandler<any> = async (data) => {
-        setOutputFormat(outputFormat)
+        setOutputFormat(outputFormatBool)
         setIsLoading(true)
         setError(null)
         setVisualizeData(null)
         let queries = {
             text: data.text,
             model: data.model,
-            output_format: outputFormat ? "html" : "image",
+            output_format: outputFormatBool ? "html" : "image",
         }
 
         try {
-            if (outputFormat) {
+            if (outputFormatBool) {
                 setIsRedirect(true)
                 let params = new URLSearchParams(queries).toString();
                 window.location.href = `${tminingUrl}${urls.visualize}?${params}`;
@@ -72,10 +72,10 @@ const VisualizeForm: FC<IProps> = ({setVisualizeData, isLoading, setIsLoading, s
                 {...register('text')}/>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Switch
-                    checked={outputFormat}
-                    onChange={() => _setOutputFormat(!outputFormat)}
+                    checked={outputFormatBool}
+                    onChange={() => setOutputFormatBool(!outputFormatBool)}
                     inputProps={{ 'aria-label': 'Output format' }}
-                /><label style={{ marginLeft: '10px' }}>Output format: {outputFormat ? "html" : "image"}</label>
+                /><label style={{ marginLeft: '10px' }}>Output format: {outputFormatBool ? "html" : "image"}</label>
             </div>
             <ErrorResponse error={error}/>
             <SubmitButton isValid={isValid} isLoading={isLoading} name={

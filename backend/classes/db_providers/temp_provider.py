@@ -5,8 +5,6 @@ class TempProvider:
     def __init__(self):
         self.data = {}
 
-    # model = {'name': 'model_name', 'uuid': 'model_uuid', 'shared': 'true/false'}
-    # user = {'sub': 'user_sub', 'uuid': 'user_uuid', 'models': [model]}
     def add_user(self, uuid, token, google_payload):
         sub = google_payload['sub']
         if sub in self.data:
@@ -19,7 +17,7 @@ class TempProvider:
             'models': []
         }
         self.data[sub] = user
-        self.__print__(sub, f'User added')
+        self.__print__(sub, 'User added')
         return user
 
     def update_user(self, token, google_payload):
@@ -29,12 +27,12 @@ class TempProvider:
         del google_payload['sub']
         user['auth_info'] = google_payload
         self.data[sub] = user
-        self.__print__(sub, f'User updated')
+        self.__print__(sub, 'User updated')
         return user
 
     def remove_user(self, sub):
         del self.data[sub]
-        self.__print__(sub, f'User removed')
+        self.__print__(sub, 'User removed')
         return None
 
     def get_user_by_sub(self, sub):

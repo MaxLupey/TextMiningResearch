@@ -1,7 +1,9 @@
 import json
+import re
 import sqlite3
 import threading
 
+sql_user_models_list = ''' SELECT * FROM models WHERE user_uuid = ? '''
 
 class SQLiteProvider:
     def __init__(self, db_file):
@@ -38,7 +40,6 @@ class SQLiteProvider:
                 uuid TEXT PRIMARY KEY,
                 shared BOOLEAN,
                 user_uuid TEXT,
-                unique_labels TEXT,
                 FOREIGN KEY(user_uuid) REFERENCES users(uuid)
             )
         """)
@@ -84,7 +85,7 @@ class SQLiteProvider:
         user = cur.fetchone()
         cur = self.get_conn().cursor()
         uuid = user[1] if user is not None else None
-        cur.execute(''' SELECT * FROM models WHERE user_uuid = ? ''', (uuid,))
+        cur.execute(sql_user_models_list, (uuid,))
         models = cur.fetchall()
         if user is not None:
             return {'sub': user[0], 'uuid': user[1], 'token': user[2], 'auth_info': user[3], 'models': models}
@@ -97,7 +98,7 @@ class SQLiteProvider:
         user = cur.fetchone()
         # get models
         cur = self.get_conn().cursor()
-        cur.execute(''' SELECT * FROM models WHERE user_uuid = ? ''', (uuid,))
+        cur.execute(sql_user_models_list, (uuid,))
         models = cur.fetchall()
         if user is not None:
             auth_info = json.loads(user[3])  # now it should not raise JSONDecodeError
@@ -132,13 +133,13 @@ class SQLiteProvider:
             sql = ''' SELECT * FROM models WHERE user_uuid = ? OR shared = 1'''
             cur.execute(sql, (uuid,))
         else:
-            sql = ''' SELECT * FROM models WHERE user_uuid = ? '''
+            sql = sql_user_models_list
             cur.execute(sql, (uuid,))
         models = cur.fetchall()
         return [{'name': model[0], 'uuid': model[1], 'shared': model[2]} for model in models]
 
     def get_model_by_uuid(self, uuid_user, uuid_model):
-        sql = ''' SELECT * FROM models WHERE uuid = ? AND user_uuid = ? '''
+        sql = ''' SELECT * FROM models WHERE uuid = ? OR shared = 1 AND user_uuid = ? '''
         cur = self.get_conn().cursor()
         cur.execute(sql, (uuid_model, uuid_user))
         model = cur.fetchone()
@@ -167,17 +168,17 @@ class SQLiteProvider:
         conn = self.get_conn()
         cur = conn.cursor()
         if name is not None and shared is not None:
-            sql = f''' UPDATE models
+            sql = ''' UPDATE models
                   SET name = ?, shared = ?
                   WHERE uuid = ? AND user_uuid = ?'''
             cur.execute(sql, (name, shared, uuid_model, uuid_user))
         elif name is not None:
-            sql = f''' UPDATE models
+            sql = ''' UPDATE models
                   SET name = ?
                   WHERE uuid = ? AND user_uuid = ?'''
             cur.execute(sql, (name, uuid_model, uuid_user))
         elif shared is not None:
-            sql = f''' UPDATE models
+            sql = ''' UPDATE models
                   SET shared = ?
                   WHERE uuid = ? AND user_uuid = ?'''
             cur.execute(sql, (shared, uuid_model, uuid_user))
@@ -187,6 +188,10 @@ class SQLiteProvider:
         return self.get_model_by_uuid(uuid_user, uuid_model)
 
     def if_identify(self, name, shared, uuid_user, uuid_model):
+        if name == '':
+            return uuid_model
+        if not self.is_identifier(name):
+            return uuid_model
         sql_check_uuid = ''' SELECT * FROM models WHERE uuid = ? AND uuid != ?'''
         cur = self.get_conn().cursor()
         cur.execute(sql_check_uuid, (name, uuid_model))
@@ -200,3 +205,7 @@ class SQLiteProvider:
         cur = self.get_conn().cursor()
         cur.execute(sql, (name, shared, uuid_user))
         return uuid_model if cur.fetchone() is not None else name
+
+    @staticmethod
+    def is_identifier(name):
+        return re.match(r'^\w+$', name) is not None

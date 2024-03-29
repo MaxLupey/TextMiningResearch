@@ -15,7 +15,8 @@ const urls = {
     edit_model: `${model}/edit`,
     upload_model: `${model}/upload`,
     delete_model: `${model}/delete`,
-    profile_info: `/profile_info`
+    profile_info: `/profile_info`,
+    csrf_token: `/csrf_token`
 }
 
 export {

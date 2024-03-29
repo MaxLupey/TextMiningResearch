@@ -1,5 +1,5 @@
-import {FC, useEffect, useState} from "react"
-import {FieldError, SubmitHandler, useForm} from "react-hook-form"
+import React, {FC, useContext, useState} from "react"
+import {SubmitHandler, useForm} from "react-hook-form"
 import { AxiosError } from "axios"
 import { joiResolver } from "@hookform/resolvers/joi"
 import { AutoComplete } from "../../../elements/AutoСomplete/AutoComplete";
@@ -11,6 +11,7 @@ import { TextField } from "@mui/material"
 import { UploadFileInput } from "../../../elements/UplodaFileInput/UploadFileInput"
 import { ErrorResponse } from "../../../elements/ErrorResponse/ErrorResponse"
 import { SubmitButton } from "../../../elements/SubmitButton/SubmitButton"
+import { CSRFTokenContext } from '../../../api/contexts/CSRFTokenContext';
 
 interface IProps {
     setValidateData: React.Dispatch<React.SetStateAction<IValidateData | null>>
@@ -18,19 +19,9 @@ interface IProps {
     isLoading: boolean
 }
 const ValidateForm: FC<IProps> = ({setValidateData, setIsLoading, isLoading}) => {
-    const {register, control, handleSubmit, formState:{errors, isValid}, watch} = useForm({mode: 'all', resolver: joiResolver(validateValidator)});
-
+    const {register, control, handleSubmit, formState:{errors, isValid}} = useForm({mode: 'all', resolver: joiResolver(validateValidator)});
+    const csrfToken = useContext(CSRFTokenContext);
     const [error, setError] = useState<null | AxiosError>(null)
-    const [modelValue, setModelValue] = useState<string | null>(null)
-    useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            if (name === 'model') {
-                setModelValue(name);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, [watch]);
 
     const onSubmit: SubmitHandler<any> = async (data) => {
         setIsLoading(true)
@@ -47,7 +38,7 @@ const ValidateForm: FC<IProps> = ({setValidateData, setIsLoading, isLoading}) =>
         }
 
         try {
-            await tminginRequest.validateModel(queries, formData).then(({data}) => {
+            await tminginRequest.validateModel(queries, formData, csrfToken).then(({data}) => {
                 setIsLoading(false)
                 setValidateData(data)
             })

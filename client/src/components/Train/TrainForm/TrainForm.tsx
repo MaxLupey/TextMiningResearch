@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC, useContext, useState} from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import {TextField} from "@mui/material";
@@ -12,6 +12,7 @@ import { AxiosError } from "axios";
 import { SubmitButton } from "../../../elements/SubmitButton/SubmitButton";
 import { UploadFileInput } from "../../../elements/UplodaFileInput/UploadFileInput";
 import { ITrainData } from "../../../interfaces/train.interface";
+import { CSRFTokenContext } from '../../../api/contexts/CSRFTokenContext';
 
 
 interface IProps {
@@ -23,7 +24,7 @@ interface IProps {
 
 const TrainForm: FC<IProps> = ({setTrainData, setIsLoading, isLoading}) => {
     const {register, control, handleSubmit, formState:{errors, isValid}} = useForm({mode: 'all', resolver: joiResolver(trainValidator)});
-    
+    const csrfToken = useContext(CSRFTokenContext);
     const [error, setError] = useState<null | AxiosError>(null)
 
     const onSubmit: SubmitHandler<any> = async (data) => {
@@ -44,7 +45,7 @@ const TrainForm: FC<IProps> = ({setTrainData, setIsLoading, isLoading}) => {
             test_size: data.test_size,
         }
         try {
-            await tminginRequest.trainModel(queries, formData).then(({data}) => {
+            await tminginRequest.trainModel(queries, formData, csrfToken).then(({data}) => {
                 setIsLoading(false)
                 setTrainData(data)
             })

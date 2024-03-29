@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import { useAuth } from '../../api/contexts/AuthContext';
 import {Link} from "react-router-dom";
-import {tminingUrl, urls} from "../../api/routers/tminingRouters";
 import { tminginRequest } from '../../api/requests/tminingRequests';
 
 const AvatarComponent = () => {
@@ -23,9 +22,6 @@ const AvatarComponent = () => {
     };
     const handleClose = () => {
         setAvatarEl(null);
-    };
-    const handleLogin = () => {
-        window.location.href = `${tminingUrl}${urls.login}`;
     };
 
     const handleLogout = async () => {

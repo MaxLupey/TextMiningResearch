@@ -19,7 +19,7 @@ const ErrorResponse: FC<IProps> = ({error}) => {
     
     return (
         <div className={css.error}>
-           {existError ? existError : ""}
+           {existError || ""}
         </div>
     )
 }

@@ -67,8 +67,6 @@ def main():
     # Parser for 'host' command
     parser_host = subparsers.add_parser('host', help='Host model as a REST API',
                                         description='Run the model as a REST-ful API service.')
-    parser_host.add_argument('-model_path', help=path_to_model, metavar=model_constant, type=str,
-                             default="", required=False)
     parser_host.add_argument('-address', help="Host to run the API on", metavar="0.0.0.0", default="0.0.0.0", type=str)
     parser_host.add_argument('-port', help="Port to run the API on", metavar="5000", default=5000, type=int)
     parser_host.add_argument('-model_dir', help="Path, where models are stored", metavar="./tmp",
@@ -101,7 +99,7 @@ def main():
                 f.write(str(visualization))
             print(f"Visualization saved to file: {args.save_to}")
         elif args.command == 'host':
-            flapp = create_app(model_path=args.model_path, address=args.address, port=args.port,
+            flapp = create_app(address=args.address, port=args.port,
                                model_dir=args.model_dir, secure=args.secure)
             serve(flapp, host=args.address, port=args.port)
         elif args.command == 'validate':

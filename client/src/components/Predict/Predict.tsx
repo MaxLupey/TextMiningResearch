@@ -2,12 +2,12 @@ import { FC, useState } from "react"
 
 import css from './Predict.module.css'
 import { DeviderSection } from "../../elements/DividerSections/DeviderSections";
-import { PredictForm } from "../Predict/PredictForm/PredictForm";
+import { PredictForm } from "./PredictForm/PredictForm";
 import { IPredictData } from "../../interfaces/predict.interface";
 
 const Predict: FC = () => {
     
-    const [PredictData, setPredictData] = useState<IPredictData | null>(null)
+    const [predictData, setPredictData] = useState<IPredictData>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     return (
@@ -23,9 +23,9 @@ const Predict: FC = () => {
                     <PredictForm setPredictData={setPredictData} setIsLoading={setIsLoading} isLoading={isLoading}/>
                     <div className={css.predict_response_wrapper}>
                         <h1 className={css.predict_subtitle}>Response: {isLoading ? "Loading..." : ""}</h1>
-                        { PredictData ? 
+                        { predictData ?
                             <ul className={css.predict_response}>
-                                <li className={css.predict_item_response}>Prediction: {PredictData.prediction ? PredictData.prediction.replace(/[\[\]']+/g,'') : "Not defined"}</li>
+                                <li className={css.predict_item_response}>Prediction: {predictData.prediction ? predictData.prediction.replace(/'+/g, '') : "Not defined"}</li>
                                 {/*<li className={css.predict_item_response}>Text: {PredictData.text ? PredictData.text : "Not defined"}</li> */}
                             </ul>  
                         : ""}

@@ -5,9 +5,23 @@ import {DeviderSection} from "../../elements/DividerSections/DeviderSections";
 
 
 const Visualize: FC = () => {
-    const [visualizeData, setVisualizeData] = useState<null | any>(null);
+    const [visualizeData, setVisualizeData] = useState<null | HTMLElement>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [outputFormat, setOutputFormat] = useState<boolean>(false);
+
+    const htmlElementToString = (element: HTMLElement | null): string => {
+      return element ? element.outerHTML : '';
+    };
+
+    function renderVisualizeData() {
+        if (outputFormat) {
+            return <div dangerouslySetInnerHTML={{__html: htmlElementToString(visualizeData) || ''}}></div>;
+        } else {
+            return <div>
+                <img src={`data:image/png;base64,${visualizeData}`} alt="visualization"/>
+            </div>;
+        }
+    }
     return (
         <>
             <section id='visualization' style={{width: "100%"}}>
@@ -27,10 +41,7 @@ const Visualize: FC = () => {
                     <div className={css.visualize_response_wrapper}>
                         <h1 className={css.visualize_response_subtitle}>Response: {isLoading ? "Loading..." : ""}</h1>
                         {visualizeData ?
-                            (outputFormat ? <div dangerouslySetInnerHTML={{__html: visualizeData}}></div> : <div>
-                                    <img src={`data:image/png;base64,${visualizeData}`} alt="visualization"/>
-                                </div>
-                            )
+                            (renderVisualizeData())
                             : ""}
                     </div>
                 </div>

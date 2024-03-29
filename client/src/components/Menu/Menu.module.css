@@ -25,7 +25,7 @@
     text-decoration: none;
     transition: box-shadow .3s, border-color .3s, background-color .3s, color .3s;
     display: flex;
-    margin-bottom: 4p;
+    margin-bottom: 4px;
 }
 
 .menu_item_active {

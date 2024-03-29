@@ -39,9 +39,11 @@ import {
 } from '@mui/icons-material';
 import {useNavigate} from "react-router-dom";
 import {UploadFileInput} from "../../elements/UplodaFileInput/UploadFileInput";
-import {useForm} from "react-hook-form";
+import {SubmitHandler, useForm} from "react-hook-form";
 import { tminginRequest } from "../../api/requests/tminingRequests";
 import { urls, tminingUrl } from "../../api/routers/tminingRouters";
+import { modelNameValidator } from "../../validators/modelNameValidator";
+import {joiResolver} from "@hookform/resolvers/joi";
 
 const ModelsPage: FC = () => {
     const { userData } = useContext(AuthContext);
@@ -63,6 +65,8 @@ const ModelsPage: FC = () => {
     const [currentShared, setCurrentShared] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [currentUUID, setCurrentUUID] = useState("");
+    const [csrfToken, setCsrfToken] = useState("")
+    const { register: editRegister, handleSubmit: editHandleSumbit, formState:{errors: editErrors, isValid}} = useForm({mode: 'all', resolver: joiResolver(modelNameValidator)});
 
     const onSubmit = (data: any) => {
         const formData = new FormData();
@@ -149,15 +153,28 @@ const ModelsPage: FC = () => {
         setSelected([]);
     };
 
+    const getCSRFToken = () => {
+        tminginRequest.csrfToken()
+                .then(response => {
+                    setCsrfToken(response.data.csrf_token);
+                })
+                .catch(error => {
+                    console.log("Failed to get csrf token: " + error);
+                });
+        return csrfToken;
+    }
+
     useEffect(() => {
         if (!userData) {
             navigate('/');
         }
+        if (!csrfToken) {
+            getCSRFToken();
+        }
         fetchModels();
-    }, [userData]);
+    }, [userData, csrfToken]);
 
     const [renameDialogOpen, setRenameDialogOpen] = useState(false);
-    const [newModelName, setNewModelName] = useState("");
 
     const handleRenameClick = (uuid: string, name: string, shared: boolean) => {
         setCurrentUUID(uuid)
@@ -192,16 +209,15 @@ const ModelsPage: FC = () => {
         }
     }
 
-    const handleRenameConfirm = () => {
+    const handleRenameConfirm: SubmitHandler<any> = async (data) => {
         let queries = {
             model_uuid: currentUUID,
-            new_model_name: newModelName,
+            new_model_name: data.modelName,
             shared: currentShared
         }
-
         const formData = new FormData();
 
-        tminginRequest.editModel(queries, formData)
+        tminginRequest.editModel(queries, formData, csrfToken)
             .then(response => {
                 if (response.status === 200) {
                     alertTextMethod("Model renamed successfully", "success");
@@ -469,29 +485,33 @@ const ModelsPage: FC = () => {
                 </Paper>
                 )}
             <Dialog open={renameDialogOpen} onClose={handleRenameDialogClose}>
-                        <DialogTitle>Edit Model</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                            </DialogContentText>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                label="New Model Name"
-                                type="text"
-                                fullWidth
-                                defaultValue={currentModelName}
-                                onChange={(event) => setNewModelName(event.target.value)}
-                            />
-                            <FormControlLabel
-                                control={<Switch checked={currentShared} onChange={(event) => setCurrentShared(event.target.checked)} />}
-                                label="Shared"
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleRenameDialogClose}>Cancel</Button>
-                            <Button onClick={handleRenameConfirm}>Edit</Button>
-                        </DialogActions>
-                    </Dialog>
+                <DialogTitle>Edit Model</DialogTitle>
+                <form onSubmit={editHandleSumbit(handleRenameConfirm)}>
+                    <DialogContent>
+                        <DialogContentText>
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label="New Model Name"
+                            type="text"
+                            fullWidth
+                            defaultValue={currentModelName}
+                            {...editRegister('modelName')}
+                            error={Boolean(editErrors.modelName)}
+                            helperText={editErrors.modelName ? String(editErrors.modelName.message) : 'Enter new model name'}
+                        />
+                        <FormControlLabel
+                            control={<Switch checked={currentShared} onChange={(event) => setCurrentShared(event.target.checked)} />}
+                            label="Shared"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleRenameDialogClose}>Cancel</Button>
+                        <Button type="submit" disabled={!isValid}>Edit</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
                     <Dialog open={deleteDialogOpen} onClose={handleDeleteDialogClose}>
                         <DialogTitle>Delete Selected Models</DialogTitle>
                         <DialogContent>

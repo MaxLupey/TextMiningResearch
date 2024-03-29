@@ -45,20 +45,20 @@ enum EModel {
     LogisticRegression = "LogisticRegression"
 }
 
-
-
+const getHeaders = (csrfToken: string | null) => ({
+    'X-CSRFToken': csrfToken ?? ''
+});
 
 export const tminginRequest = {
-    trainModel: (queries: ITrainQuery, formData: FormData): Promise<AxiosResponse<ITrainData>> => axiosService.post(urls.train, formData, { params: queries, withCredentials: true }),
-    validateModel: (queries: IValidateQuery, formData: FormData) => axiosService.post(urls.validate, formData, { params: queries, withCredentials: true  }),
+    trainModel: (queries: ITrainQuery, formData: FormData, csrfToken: string | null): Promise<AxiosResponse<ITrainData>> => axiosService.post(urls.train, formData, { params: queries, withCredentials: true , headers: getHeaders(csrfToken)}),
+    validateModel: (queries: IValidateQuery, formData: FormData, csrfToken: string | null) => axiosService.post(urls.validate, formData, { params: queries, withCredentials: true, headers: getHeaders(csrfToken)}),
     predictModel: (queries: IPredictQuery) => axiosService.get(urls.predict, { params: queries, withCredentials: true  }),
     visualizeModel: (queries: IVisualizeQuery) => axiosService.get(urls.visualize, { params: queries, withCredentials: true  }),
-    downloadModel: (model_name: string) => axiosService.get(urls.download(model_name)),
-    login: (): Promise<AxiosResponse<{redirect_url: string}>> => axiosService.get(urls.login),
     logout: () => axiosService.get(urls.logout, {withCredentials: true}),
     getModelList: () => axiosService.get(urls.model_list, {withCredentials: true}),
     getUserModels: () => axiosService.get(urls.user_models, {withCredentials: true}),
-    editModel: (queries: { shared: boolean; new_model_name: string; model_uuid: string }, formData: FormData) => axiosService.put(urls.edit_model, formData, { params: queries, withCredentials: true }),
+    editModel: (queries: { shared: boolean; new_model_name: string; model_uuid: string }, formData: FormData, csrfToken: string | null) => axiosService.put(urls.edit_model, formData, { params: queries, withCredentials: true, headers: getHeaders(csrfToken)}),
+    csrfToken: () => axiosService.get(urls.csrf_token, {withCredentials: true}),
     uploadModel: (queries: { shared: boolean; model_name: string }, formData: FormData) => axiosService.post(urls.upload_model, formData, { params: queries, withCredentials: true }),
     deleteModel: (model_name: string) => axiosService.delete(urls.delete_model, { params: {model_uuid: model_name}, withCredentials: true }),
     profileInfo: () => axiosService.get(urls.profile_info, {withCredentials: true})

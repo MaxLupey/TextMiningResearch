@@ -315,6 +315,10 @@ Example response:
 }
 ```
 
+UI example:
+![341174521-aaf9b011-0853-478f-9e6a-c89c9983d964](https://github.com/MaxLupey/TMining/assets/55431857/848c6cfc-eec2-4d28-88b9-2a2e4218d5d6)
+
+
 ### 5) Visualization
 
 - `GET /model/visualize` - Generate an HTML visualization of model predictions for a given text input

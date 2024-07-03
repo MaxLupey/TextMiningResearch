@@ -267,6 +267,12 @@ Example response:
 }
 ```
 
+An example of a response in a React App:
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/d7a5b24c-1180-4a3e-94cb-34c186e48f82)
+
+
+
 ### 2) Download
 
 - `GET /model/download/<model_name>` - Download the trained model.
@@ -304,6 +310,13 @@ Example response:
 }
 ```
 
+An example of a response in a React App:
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/0e80eeb3-90f4-4175-98ed-3bce8b381ece)
+
+
+
+
 ### 4) Predictions
 
 - `GET /model/predict` - Make a prediction for a given text input
@@ -326,6 +339,12 @@ Example response:
 }
 ```
 
+An example of a response in a React App:
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/9a0fb3c2-80b1-4c7c-9d29-fe8c0ee0ca56)
+
+
+
 ### 5) Visualization
 
 - `GET /model/visualize` - Generate an HTML visualization of model predictions for a given text input
@@ -339,6 +358,11 @@ GET http://localhost:5000/model/visualize?text=This is a test
 
 Example response: 
 
-![image](https://github.com/MaxLupey/TMining/assets/55431857/062b08e7-8e7e-4926-b65d-a8d22664d72b)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/51b44a52-53ef-4ea5-99f4-e3530ed11f68)
 
-">
+
+An example of a response in a React App:
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/6b284031-5a9a-4b3b-ba5f-3d6009e97cde)
+
+

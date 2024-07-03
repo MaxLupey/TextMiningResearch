@@ -80,24 +80,32 @@ react_app = "http://localhost:3000"
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project.
 
-![Google Cloud Console](https://github.com/MaxLupey/TextMining/assets/80894944/1743fedb-da48-450a-aebe-a1e633412f09)
-![Create Project](https://github.com/MaxLupey/TextMining/assets/80894944/806b4fba-a882-49db-a006-ab1850afad00)
-![Creating Project](https://github.com/MaxLupey/TextMining/assets/80894944/1e88ec3b-5bb9-44c9-aae5-b623dfdd75db)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/5f819a8b-329e-4f09-bb0d-9333d762c33f)
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/64494876-37e8-442d-a58e-170e25e56c60)
+
+![image](https://github.com/MaxLupey/TMining/assets/55431857/e2abe069-3350-4525-b416-b652e440bf8d)
+
 3. In the sidebar on the left, expand APIs & Services and select OAuth consent screen.
 
-![Select User Type](https://github.com/MaxLupey/TextMining/assets/80894944/a16f90bc-b7f1-46f1-a078-ee05ac625f8d)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/b8962f34-cef8-46d9-a819-26804a92f177)
+
 4. Choose an email address, enter a product name and click the Save button.
 
-![Filling in information](https://github.com/MaxLupey/TextMining/assets/80894944/080ab38a-cc07-42b5-b66b-29bfd26b6704)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/579b1d40-c5d8-4d04-b599-066eb93c0bc4)
+
 5. In the sidebar on the left, select Credentials. Click the Create credentials button and select OAuth client ID.
 
-![Credentials](https://github.com/MaxLupey/TextMining/assets/80894944/621a4a6a-83d6-4a1e-929a-23d8eed07f1e)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/914eb717-bc65-47ee-9703-aedf446daa17)
+
 6. Select the application type Web application. Enter the name of the application, and the authorized redirect URIs. Format: `http://localhost:5000/callback`
 
-![Creating OAuth client ID](https://github.com/MaxLupey/TextMining/assets/80894944/8f2aa887-dc4e-4a6d-a23f-095d2f14f980)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/0c7b0f3f-dcc9-4dc5-8eda-1291bd24fd17)
+
 7. After creating the OAuth client, click the Download JSON button to download the client_secret file.
 
-![Download JSON](https://github.com/MaxLupey/TextMining/assets/80894944/ac0e5bc9-7992-4591-a664-7946a9f1e7a4)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/1d81eedb-a3a3-4716-99fb-c74ceed53e0f)
+
 8. Move the downloaded file to the `./backend/env` directory and rename it to `client_secrets.json`.
 
 ## Download Datasets
@@ -158,7 +166,8 @@ python main.py validate -model_path ./model.mdl -dataset_path ./data/factcheck.c
 
 Example response:
 
-![image](https://github.com/MaxLupey/TextMining/assets/152855049/be5b207f-6e2d-4ede-909f-3c433c9a36e8)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/03d9395a-35ca-465f-b203-b364ce9976ee)
+
 
 ## Predictions
 Make predictions for input text using our trained model.
@@ -173,7 +182,8 @@ python main.py predict -model_path ./model.mdl -text "fake news text"
 
 Example response:
 
-![image](https://github.com/MaxLupey/TextMining/assets/152855049/fef5711f-8a86-4c7c-b6d8-013010c326eb)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/c35606fd-0b97-47c8-aaf4-5201d8872272)
+
 
 ## Vizualization
 Generate an HTML visualization of model predictions for a given text input.
@@ -190,7 +200,8 @@ python main.py visualize -model_path ./model.mdl -text "fake news text" [-featur
 
 Example response:
 
-![image](https://github.com/MaxLupey/TextMining/assets/152855049/7cc1f299-b6eb-4c87-9f7d-efce5f0be2cb)
+![image](https://github.com/MaxLupey/TMining/assets/55431857/9f1b4ebd-9ea3-46a3-95a2-7e0688bdd7e8)
+
 
 
 ## Hosting
@@ -315,10 +326,6 @@ Example response:
 }
 ```
 
-UI example:
-![341174521-aaf9b011-0853-478f-9e6a-c89c9983d964](https://github.com/MaxLupey/TMining/assets/55431857/848c6cfc-eec2-4d28-88b9-2a2e4218d5d6)
-
-
 ### 5) Visualization
 
 - `GET /model/visualize` - Generate an HTML visualization of model predictions for a given text input
@@ -332,4 +339,6 @@ GET http://localhost:5000/model/visualize?text=This is a test
 
 Example response: 
 
-<img width="1237" alt="image" src="https://github.com/MaxLupey/TextMining/assets/55431857/d33c48fd-97ed-4efc-a4de-ec73a9613b1b">
+![image](https://github.com/MaxLupey/TMining/assets/55431857/062b08e7-8e7e-4926-b65d-a8d22664d72b)
+
+">

@@ -3,7 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/MaxLupey/TMining/blob/main/LICENSE)
 [![CodeQL](https://github.com/MichaelCurrin/badge-generator/workflows/CodeQL/badge.svg)](https://github.com/MaxLupey/TMining/actions?query=workflow%3ACodeQL "Code quality workflow status")
 
-A repository for text mining [scientific](https://scholar.google.com/citations?hl=en&user=8_OPWxAAAAAJ) research. This app is suitable for text mining research like news reliability (fake news) detection, authorship, and unique text style detection.
+A repository for text mining [scientific]([https://scholar.google.com/citations?hl=en&user=8_OPWxAAAAAJ](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8_OPWxAAAAAJ&citation_for_view=8_OPWxAAAAAJ:4TOpqqG69KYC)) research. This app is suitable for text mining research like news reliability (fake news) detection, authorship, and unique text style detection.
+
+Cite via: [Tmining]([https://scholar.google.com/citations?hl=en&user=8_OPWxAAAAAJ](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8_OPWxAAAAAJ&citation_for_view=8_OPWxAAAAAJ:4TOpqqG69KYC)) 
 
 
 ![data-science-methodology](https://github.com/MaxLupey/TMining/assets/55431857/5543f7ba-a4b6-4606-bc1e-06f4d87a1a25)
